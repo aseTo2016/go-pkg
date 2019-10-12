@@ -1,4 +1,4 @@
-module go-pkg
+module github.com/aseTo2016/go-pkg
 
 go 1.13
 
