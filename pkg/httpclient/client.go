@@ -12,6 +12,11 @@ type Cli struct {
 	nativeClient *http.Client
 }
 
+// NativeClient sets native http client
+func (c *Cli) NativeClient(client *http.Client) {
+	c.nativeClient = client
+}
+
 type Builder struct {
 	method string
 	url    string
