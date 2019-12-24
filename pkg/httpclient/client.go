@@ -16,6 +16,9 @@ type Builder struct {
 	method string
 	url    string
 	body   interface{}
+	header http.Header
+
+	req *http.Request
 
 	statusCheck       func(resp *http.Response) error
 	parseResponseBody func(resp *http.Response, result interface{}) error
@@ -35,8 +38,21 @@ func (b *Builder) ParseResponseBody(parseResponseBody func(resp *http.Response, 
 	return b
 }
 
+// Result must be a pointer, is result
 func (b *Builder) Result(result interface{}) *Builder {
 	b.result = result
+	return b
+}
+
+// Header sets header
+func (b *Builder) Header(header http.Header) *Builder {
+	b.header = header
+	return b
+}
+
+// Request sets req
+func (b *Builder) Request(req *http.Request) *Builder {
+	b.req = req
 	return b
 }
 
@@ -71,9 +87,21 @@ func defaultParseResponseBody(resp *http.Response, result interface{}) error {
 	return json.Unmarshal(data, result)
 }
 
-func (c *Cli) Do(builder *Builder) (err error) {
+func (c *Cli) Do(builder *Builder) error {
+	err := c.request(builder)
+	if err != nil {
+		return err
+	}
+	return c.do(builder)
+}
+
+func (c *Cli) request(builder *Builder) error {
+	if builder.req != nil {
+		return nil
+	}
 	data, ok := builder.body.([]byte)
 	if !ok {
+		var err error
 		data, err = json.Marshal(builder.body)
 		if err != nil {
 			return err
@@ -83,7 +111,15 @@ func (c *Cli) Do(builder *Builder) (err error) {
 	if err != nil {
 		return err
 	}
-	resp, err := c.nativeClient.Do(req)
+	req.Header = builder.header
+
+	builder.req = req
+	return nil
+}
+
+func (c *Cli) do(builder *Builder) (err error) {
+	var resp *http.Response
+	resp, err = c.nativeClient.Do(builder.req)
 	if err != nil {
 		return err
 	}
