@@ -9,6 +9,6 @@ import (
 func TestInit(t *testing.T) {
 	err := Init()
 	if Nil(t, err) {
-		logger.Infof("---->, %s", "ok")
+		logger.InfoF("---->, %s", "ok")
 	}
 }

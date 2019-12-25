@@ -2,10 +2,13 @@ package logger
 
 // Logger interface
 type Logger interface {
-	Infof(string, ...interface{})
+	InfoF(string, ...interface{})
 	Info(...interface{})
-	Debugf(string, ...interface{})
+	DebugF(string, ...interface{})
 	Debug(...interface{})
-	Errorf(error, string, ...interface{})
+	ErrorF(error, string, ...interface{})
 	Error(...interface{})
+	WarnEf(error, string, ...interface{})
+	WarnF(string, ...interface{})
+	Warn(...interface{})
 }

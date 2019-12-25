@@ -44,7 +44,7 @@ func Init() error {
 	sugar = lgr.Sugar()
 	logger.InitResource(new(adapter))
 
-	logger.Infof("log config path is %s", logConfigPath)
+	logger.InfoF("log config path is %s", logConfigPath)
 
 	return lgr.Sync()
 }

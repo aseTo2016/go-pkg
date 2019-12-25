@@ -5,8 +5,8 @@ import "log"
 type defaultLogger struct {
 }
 
-// Infof ...
-func (d defaultLogger) Infof(template string, args ...interface{}) {
+// InfoF ...
+func (d defaultLogger) InfoF(template string, args ...interface{}) {
 	log.Printf(template, args...)
 }
 
@@ -15,8 +15,8 @@ func (d defaultLogger) Info(args ...interface{}) {
 	log.Println(args...)
 }
 
-// Debugf ...
-func (d defaultLogger) Debugf(template string, args ...interface{}) {
+// DebugF ...
+func (d defaultLogger) DebugF(template string, args ...interface{}) {
 	log.Printf(template, args...)
 }
 
@@ -25,12 +25,27 @@ func (d defaultLogger) Debug(args ...interface{}) {
 	log.Println(args...)
 }
 
-// Errorf error must not be nil, if is nil ,please use Error
-func (d defaultLogger) Errorf(err error, template string, args ...interface{}) {
+// ErrorF error must not be nil, if is nil ,please use Error
+func (d defaultLogger) ErrorF(err error, template string, args ...interface{}) {
 	log.Printf(template+", %s", append(args, err.Error())...)
 }
 
 // Error ...
 func (d defaultLogger) Error(args ...interface{}) {
+	log.Println(args...)
+}
+
+// WarnEf ...
+func (d defaultLogger) WarnEf(err error, template string, args ...interface{}) {
+	log.Printf(template+", %s", append(args, err.Error())...)
+}
+
+// WarnF ...
+func (d defaultLogger) WarnF(template string, args ...interface{}) {
+	log.Printf(template, args...)
+}
+
+// Warn ...
+func (d defaultLogger) Warn(args ...interface{}) {
 	log.Println(args...)
 }

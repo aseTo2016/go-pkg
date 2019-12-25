@@ -3,8 +3,8 @@ package zap
 type adapter struct {
 }
 
-// Infof ...
-func (a *adapter) Infof(template string, args ...interface{}) {
+// InfoF ...
+func (a *adapter) InfoF(template string, args ...interface{}) {
 	sugar.Infof(template, args...)
 }
 
@@ -13,8 +13,8 @@ func (a *adapter) Info(args ...interface{}) {
 	sugar.Info(args...)
 }
 
-// Debugf ...
-func (a *adapter) Debugf(template string, args ...interface{}) {
+// DebugF ...
+func (a *adapter) DebugF(template string, args ...interface{}) {
 	sugar.Debugf(template, args...)
 }
 
@@ -23,12 +23,27 @@ func (a *adapter) Debug(args ...interface{}) {
 	sugar.Debug(args...)
 }
 
-// Errorf ...
-func (a *adapter) Errorf(err error, template string, args ...interface{}) {
+// ErrorF ...
+func (a *adapter) ErrorF(err error, template string, args ...interface{}) {
 	sugar.Errorf(template+"%s", append(args, err.Error()))
 }
 
 // Error ...
 func (a *adapter) Error(args ...interface{}) {
 	sugar.Error(args...)
+}
+
+// WarnEf ...
+func (a *adapter) WarnEf(err error, template string, args ...interface{}) {
+	sugar.Warnf(template+"%s", append(args, err.Error()))
+}
+
+// WarnF ...
+func (a *adapter) WarnF(template string, args ...interface{}) {
+	sugar.Warnf(template, args...)
+}
+
+// Warn ...
+func (a *adapter) Warn(args ...interface{}) {
+	sugar.Warn(args...)
 }
